@@ -1,5 +1,6 @@
 .page__content {
   max-width: 880px;
+  width: 70%;
   margin: 0 auto 0;
 }
 
