@@ -10,5 +10,5 @@
 * grid layout
 * методология БЭМ
 
-[Ссылка на GitHub Pages]
+[Ссылка на GitHub Pages](https://tatiana-pavlova.github.io/mesto/index.html)
 
