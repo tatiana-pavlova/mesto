@@ -6,3 +6,17 @@
   color: #fff;
   margin: 0;
 }
+
+@media screen and (max-width: 1015px)  {
+  .profile__name {
+    font-size: 35px;
+    line-height: 41px;
+  }
+}
+
+@media screen and (max-width: 760px)  {
+  .profile__name {
+    font-size: 27px;
+    line-height: 33px;
+  }
+}
