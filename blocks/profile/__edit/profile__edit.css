@@ -1,7 +1,7 @@
 .profile__edit {
   width: 24px;
   height: 24px;
-  background: url(../../../images/edit.png) center no-repeat;
+  background: url(../../../images/edit.svg) center no-repeat;
   background-color: #000;
   outline: none;
   border: 1px solid #fff;
@@ -19,5 +19,6 @@
   .profile__edit {
     width: 18px;
     height: 18px;
+    margin: 2px 20px 0 10px;
   }
 }

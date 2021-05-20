@@ -16,61 +16,61 @@
     <main>
       <section class="profile">
         <div class="profile__user">
-          <img src="./images/Jacque-Yves_Cousteau.jpg" alt="Фото Жак-Ив Кусто" class="profile__avatar">
+          <img src="./images/Jacque-Yves_Cousteau.jpg" alt="Фото пользователя" class="profile__avatar">
           <div class="profile__info">
             <div class="profile__name-info">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
-              <button class="profile__edit"></button>
+              <button type="button" class="profile__edit" aria-label="Редактировать профайл"></button>
             </div>
             <p class="profile__job-info">Исследователь океана</p>
           </div>
         </div>
-        <button class="profile__add"></button>
+        <button type="button" class="profile__add" aria-label="Добавить фото"></button>
       </section>
 
       <section class="places">
-        <div class="place">
+        <article class="place">
           <img src="./images/place-pic1-Karachayevsk.jpg" alt="Старое церковние строение" class="place__pic">
           <div class="place__desctiption">
-            <p class="place__name">Карачаевск</p>
-            <img src="./images/like.svg" alt="Символ сердца" class="place__like-ico"> 
+            <h2 class="place__name">Карачаевск</h2>
+            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
           </div>
-        </div>
-        <div class="place">
+        </article>
+        <article class="place">
           <img src="./images/place-pic2-Elbrus.jpg" alt="Гора Эльбрус" class="place__pic">
           <div class="place__desctiption">
-            <p class="place__name">Гора Эльбрус</p>
-            <img src="./images/like.svg" alt="Символ сердца" class="place__like-ico">
+            <h2 class="place__name">Гора Эльбрус</h2>
+            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
           </div>
-        </div>
-        <div class="place">
+        </article>
+        <article class="place">
           <img src="./images/place-pic3-Dombaj.jpg" alt="Горный хребет Домбай" class="place__pic">
           <div class="place__desctiption">
-            <p class="place__name">Домбай</p>
-            <img src="./images/like.svg" alt="Символ сердца" class="place__like-ico">
+            <h2 class="place__name">Домбай</h2>
+            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
           </div>
-        </div>
-        <div class="place">
+        </article>
+        <article class="place">
           <img src="./images/place-pic4-Oranienbaum.jpg" alt="Садовая арка увитая плющом" class="place__pic">
           <div class="place__desctiption">
-            <p class="place__name">Ораниенбаум</p>
-            <img src="./images/like.svg" alt="Символ сердца" class="place__like-ico">
+            <h2 class="place__name">Ораниенбаум</h2>
+            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
           </div>
-        </div>
-        <div class="place">
+        </article>
+        <article class="place">
           <img src="./images/place-pic5-Park_Monrepos.jpg" alt="Лесной пейзаж парка Монрепо" class="place__pic">
           <div class="place__desctiption">
-            <p class="place__name">Парк Монрепо</p>
-            <img src="./images/like.svg" alt="Символ сердца" class="place__like-ico">
+            <h2 class="place__name">Парк Монрепо</h2>
+            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
           </div>
-        </div>
-        <div class="place">
+        </article>
+        <article class="place">
           <img src="./images/place-pic6-LakeOnega.jpg" alt="Скалистый берег Онежского озера" class="place__pic">
           <div class="place__desctiption">
-            <p class="place__name">Онежское озеро</p>
-            <img src="./images/like.svg" alt="Символ сердца" class="place__like-ico"> 
+            <h2 class="place__name">Онежское озеро</h2>
+            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
           </div>
-        </div>
+        </article>
       </section>
     </main>
 
@@ -79,17 +79,17 @@
     </footer>
   </div>
 
-  <section class="popup">
+  <div class="popup">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form action="" class="popup__form">
-        <input type="text" class="popup__editName" value="">
-        <input type="text" class="popup__editJob" value="">
+      <form class="popup__form" name="profileEditForm">
+        <input type="text" class="popup__input popup__input_edit_name" value="" name="name">
+        <input type="text" class="popup__input popup__input_edit_job" value="" name="job">
         <button type="submit" class="popup__submit" aria-label="Сохранить изменения">Сохранить</button>
       </form>
       <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
     </div>
-  </section>
+  </div>
   
   <script src="./scripts/script.js"></script>
 </body>
