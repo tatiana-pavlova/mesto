@@ -6,8 +6,6 @@ let profileName = document.querySelector('.profile__name');
 let editJob = document.querySelector('.popup__input_edit_job');
 let profileJob = document.querySelector('.profile__job-info');
 let formElement = document.querySelector('.popup__form');
-let nameInput = document.querySelector('.popup__input_edit_name');
-let jobInput = document.querySelector('.popup__input_edit_job');
 
 
 function openPopupForm() {
@@ -22,8 +20,8 @@ function closePopupForm() {
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
+  profileName.textContent = editName.value;
+  profileJob.textContent = editJob.value;
   closePopupForm();
 }
 
