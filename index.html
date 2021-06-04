@@ -29,48 +29,16 @@
       </section>
 
       <section class="places">
-        <article class="place">
-          <img src="./images/place-pic1-Karachayevsk.jpg" alt="Старое церковние строение" class="place__pic">
-          <div class="place__desctiption">
-            <h2 class="place__name">Карачаевск</h2>
-            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
-          </div>
-        </article>
-        <article class="place">
-          <img src="./images/place-pic2-Elbrus.jpg" alt="Гора Эльбрус" class="place__pic">
-          <div class="place__desctiption">
-            <h2 class="place__name">Гора Эльбрус</h2>
-            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
-          </div>
-        </article>
-        <article class="place">
-          <img src="./images/place-pic3-Dombaj.jpg" alt="Горный хребет Домбай" class="place__pic">
-          <div class="place__desctiption">
-            <h2 class="place__name">Домбай</h2>
-            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
-          </div>
-        </article>
-        <article class="place">
-          <img src="./images/place-pic4-Oranienbaum.jpg" alt="Садовая арка увитая плющом" class="place__pic">
-          <div class="place__desctiption">
-            <h2 class="place__name">Ораниенбаум</h2>
-            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
-          </div>
-        </article>
-        <article class="place">
-          <img src="./images/place-pic5-Park_Monrepos.jpg" alt="Лесной пейзаж парка Монрепо" class="place__pic">
-          <div class="place__desctiption">
-            <h2 class="place__name">Парк Монрепо</h2>
-            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
-          </div>
-        </article>
-        <article class="place">
-          <img src="./images/place-pic6-LakeOnega.jpg" alt="Скалистый берег Онежского озера" class="place__pic">
-          <div class="place__desctiption">
-            <h2 class="place__name">Онежское озеро</h2>
-            <button type="button" class="place__like" aria-label="Нравится фото места"></button>
-          </div>
-        </article>
+        <template id="place">
+          <article class="place"> 
+            <img alt="Фото места" class="place__pic">
+            <div class="place__desctiption">
+              <h2 class="place__name"></h2>
+              <button type="button" class="place__like" aria-label="Нравится фото места"></button>
+            </div>
+            <button type="button" class="place__delete" aria-label="Удалить фото"></button>
+          </article>
+        </template>
       </section>
     </main>
 
@@ -79,7 +47,7 @@
     </footer>
   </div>
 
-  <div class="popup">
+  <div class="popup popup_type_editProfile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="profileEditForm">
@@ -89,6 +57,30 @@
       </form>
       <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
     </div>
+  </div>
+
+  <div class="popup popup_type_newCard">
+    <div class="popup__container">
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form" name="profileEditForm">
+        <input type="text" class="popup__input popup__input_placeName" placeholder="Название" name="placeName">
+        <input type="text" class="popup__input popup__input_placeLink" placeholder="Ссылка на картинку" name="placeLink">
+        <button type="submit" class="popup__submit" aria-label="Сохранить изменения">Создать</button>
+      </form>
+      <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_photo">
+    <template id="picture">
+      <div class="picture">
+        <figure class="picture__container">
+          <img alt="Фото места" class="picture__view" >
+          <figcaption class="picture__name"></figcaption>
+        </figure>
+        <button type="button" class="picture__close" aria-label="Закрыть попап"></button>
+      </div>
+    </template>
   </div>
   
   <script src="./scripts/script.js"></script>
