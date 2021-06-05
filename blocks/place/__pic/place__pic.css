@@ -3,3 +3,8 @@
   height: 282px;
   border-radius: 10px 10px 0 0;
 }
+
+.place__pic:hover {
+  transform: scale(1.05);
+  transition: transform .5s ease-in;
+}
