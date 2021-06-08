@@ -71,25 +71,10 @@ function addCard (card) {
   image.src = card.link;
   image.alt = card.name;
 
-  // cardElement.querySelector('.place__like').addEventListener ('click', function (evt) {
-  //   evt.target.classList.toggle('place__like_active');
-  // });
-
   cardElement.querySelector('.place__like').addEventListener ('click', (evt) => handleLikeClick (evt.target));
   
-
-  // cardElement.querySelector('.place__delete').addEventListener ('click', function (evt) {
-  //   evt.target.closest('.place').remove();
-  // });
-
   cardElement.querySelector('.place__delete').addEventListener ('click', (evt) => handleDeleteCardClick (evt.target));
     
-
-  // cardElement.querySelector('.place__pic').addEventListener ('click', function (evt) {
-  //   openPopup(popupPhoto);
-  //   showPicture (evt.target.closest('.place'));
-  // });
-
   cardElement.querySelector('.place__pic').addEventListener ('click', (evt) => handlePictureClick (evt.target));
     
 
