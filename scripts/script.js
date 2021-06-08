@@ -38,8 +38,7 @@ function openProfilePopup() {
 
 
 function closeAddPopup() {
-  newCardName.value = '';
-  newCardLink.value = '';
+  formAddElement.reset();
   closePopup(popupAdd);
 }
 
@@ -54,9 +53,11 @@ function handleEditFormSubmit (evt) {
 
 function handleAddFormSubmit (evt) {
   evt.preventDefault();
-  const newCard = [];
-  newCard.name = newCardName.value;
-  newCard.link = newCardLink.value;
+  const newCard = {
+    name:newCardName.value,
+    link:newCardLink.value
+  }
+  
   cardPlace.prepend(addCard(newCard));
   closeAddPopup();
 }
@@ -66,23 +67,46 @@ function addCard (card) {
   const cardElement = cardTemplate.querySelector('.place').cloneNode(true);
 
   cardElement.querySelector('.place__name').textContent = card.name;
-  cardElement.querySelector('.place__pic').src = card.link;
-  cardElement.querySelector('.place__pic').alt = card.name;
+  const image = cardElement.querySelector('.place__pic');
+  image.src = card.link;
+  image.alt = card.name;
 
-  cardElement.querySelector('.place__like').addEventListener ('click', function(evt) {
-    evt.target.classList.toggle('place__like_active');
-  });
+  // cardElement.querySelector('.place__like').addEventListener ('click', function (evt) {
+  //   evt.target.classList.toggle('place__like_active');
+  // });
 
-  cardElement.querySelector('.place__delete').addEventListener ('click', function (evt) {
-    evt.target.closest('.place').remove();
-  });
+  cardElement.querySelector('.place__like').addEventListener ('click', (evt) => handleLikeClick (evt.target));
+  
 
-  cardElement.querySelector('.place__pic').addEventListener ('click', function (evt) {
-    openPopup(popupPhoto);
-    showPicture (evt.target.closest('.place'));
-  });
+  // cardElement.querySelector('.place__delete').addEventListener ('click', function (evt) {
+  //   evt.target.closest('.place').remove();
+  // });
+
+  cardElement.querySelector('.place__delete').addEventListener ('click', (evt) => handleDeleteCardClick (evt.target));
+    
+
+  // cardElement.querySelector('.place__pic').addEventListener ('click', function (evt) {
+  //   openPopup(popupPhoto);
+  //   showPicture (evt.target.closest('.place'));
+  // });
+
+  cardElement.querySelector('.place__pic').addEventListener ('click', (evt) => handlePictureClick (evt.target));
+    
 
   return cardElement;
+}
+
+function handleLikeClick (element) {
+  element.classList.toggle('place__like_active');
+}
+
+function handleDeleteCardClick (element) {
+  element.closest('.place').remove();
+}
+
+function handlePictureClick (element) {
+  openPopup(popupPhoto);
+  showPicture (element.closest('.place'));
 }
 
 
@@ -94,8 +118,9 @@ function downloadCards (cardArray) {
 
 
 function showPicture (picChosen) {
-  popupPhoto.querySelector('.picture__view').src = picChosen.querySelector('.place__pic').src;
-  popupPhoto.querySelector('.picture__view').alt = picChosen.querySelector('.place__name').textContent;
+  const photo = popupPhoto.querySelector('.picture__view');
+  photo.src = picChosen.querySelector('.place__pic').src;
+  photo.alt = picChosen.querySelector('.place__name').textContent;
   popupPhoto.querySelector('.picture__name').textContent = picChosen.querySelector('.place__name').textContent;
 }
 
