@@ -50,9 +50,11 @@
   <div class="popup popup_type_editProfile">
     <div class="popup__container">
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="profileEditForm">
-        <input type="text" class="popup__input popup__input_edit_name" value="" name="name">
-        <input type="text" class="popup__input popup__input_edit_job" value="" name="job">
+      <form class="popup__form" name="profileEditForm" novalidate>
+        <input id="name-input" type="text" class="popup__input popup__input_edit_name" value="" name="name" required minlength="2" maxlength="40">
+        <span class="name-input-error"></span>
+        <input id="job-input" type="text" class="popup__input popup__input_edit_job" value="" name="job" required minlength="2" maxlength="200">
+        <span class="job-input-error"></span>
         <button type="submit" class="popup__submit" aria-label="Сохранить изменения">Сохранить</button>
       </form>
       <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
@@ -83,5 +85,6 @@
   
   <script src="./scripts/initialCards.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 </html>
