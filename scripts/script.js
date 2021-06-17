@@ -22,11 +22,15 @@ const cardTemplate = document.querySelector('#place').content;
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  clearFormErrors (popup);
+  document.addEventListener('keydown', (evt) => {handleKeyPress(evt, popup)});
+  popup.addEventListener('click',(evt) => {handleOverlayClick(evt, popup)}); 
 }
 
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', (evt) => {handleKeyPress(evt, popup)});
 }
 
 
@@ -36,10 +40,9 @@ function openProfilePopup() {
   openPopup(popupEdit);
 }
 
-
-function closeAddPopup() {
+function openAddPopup() {
   formAddElement.reset();
-  closePopup(popupAdd);
+  openPopup(popupAdd);
 }
 
 
@@ -59,7 +62,8 @@ function handleAddFormSubmit (evt) {
   }
   
   cardPlace.prepend(addCard(newCard));
-  closeAddPopup();
+  
+  closePopup(popupAdd);
 }
 
 
@@ -110,6 +114,42 @@ function showPicture (picChosen) {
 }
 
 
+function handleOverlayClick(evt, popup) {
+  const container = popup.firstElementChild;
+
+  if (evt.target.closest(`.${container.className}`) != container) {
+    closePopup(popup);
+  }
+}
+
+function handleKeyPress (evt, popup) {
+  if (evt.key === 'Escape') {
+    closePopup(popup);
+  }
+}
+
+function clearFormErrors (popup) {
+  const form = popup.querySelector('.popup__form');
+  
+  if (form) {
+    const inputList = Array.from(form.querySelectorAll('.popup__input'));
+    const button = form.querySelector('.popup__button');
+    const selectors = {
+      formSelector: '.popup__form',
+      inputSelector: '.popup__input',
+      submitButtonSelector: '.popup__button',
+      inactiveButtonClass: 'popup__button_disabled',
+      inputErrorClass: 'popup__input_type_error',
+      errorClass: 'popup__error_visible'
+    };
+    inputList.forEach((input) => {
+      hideInputError(selectors, form, input);
+      toggleButtonState(selectors, inputList, button);
+    });
+  }
+}
+
+
 downloadCards(initialCards);
 
 
@@ -120,9 +160,9 @@ closePopupEdit.addEventListener('click', () => closePopup(popupEdit));
 formEditElement.addEventListener ('submit', handleEditFormSubmit);
 
 
-openPopupAdd.addEventListener('click', () => openPopup(popupAdd));
+openPopupAdd.addEventListener('click', () => openAddPopup());
 
-closePopupAdd.addEventListener('click', () => closeAddPopup());
+closePopupAdd.addEventListener('click', () => closePopup(popupAdd));
 
 formAddElement.addEventListener('submit', handleAddFormSubmit);
 
