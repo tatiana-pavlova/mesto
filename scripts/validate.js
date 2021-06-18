@@ -41,15 +41,15 @@ function setEventListener (objOfSelectors, formElement) {
 }
 
 
-function enableValidation (ObjOfSelectors) {
-  const formList = Array.from(document.querySelectorAll(ObjOfSelectors.formSelector));
+function enableValidation (objOfSelectors) {
+  const formList = Array.from(document.querySelectorAll(objOfSelectors.formSelector));
   
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
     });
 
-    setEventListener (ObjOfSelectors, formElement);
+    setEventListener (objOfSelectors, formElement);
   });
 }
 
@@ -68,6 +68,29 @@ function toggleButtonState (objOfSelectors, inputList, buttonElement) {
   } else {
     buttonElement.classList.remove(objOfSelectors.inactiveButtonClass);
     buttonElement.removeAttribute('disabled');
+  }
+}
+
+
+function clearFormErrors (popup) {
+  const form = popup.querySelector('.popup__form');
+  
+  if (form) {
+    const inputList = Array.from(form.querySelectorAll('.popup__input'));
+    const button = form.querySelector('.popup__button');
+    const selectors = {
+      formSelector: '.popup__form',
+      inputSelector: '.popup__input',
+      submitButtonSelector: '.popup__button',
+      inactiveButtonClass: 'popup__button_disabled',
+      inputErrorClass: 'popup__input_type_error',
+      errorClass: 'popup__error_visible'
+    };
+    
+    inputList.forEach((input) => {
+      hideInputError(selectors, form, input);
+      toggleButtonState(selectors, inputList, button);
+    });
   }
 }
 
