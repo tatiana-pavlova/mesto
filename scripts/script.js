@@ -118,13 +118,18 @@ function handleKeyPress (evt) {
   }
 }
 
+function setValidationCheck () {
+  formList.forEach((form) => {
+    const validator = new FormValidator (selectors, form);
+    validator.enableValidation ();
+  });
+}
+
 
 downloadCards(initialCards);
+setValidationCheck();
 
-formList.forEach((form) => {
-  const validator = new FormValidator (selectors, form);
-  validator.enableValidation ();
-});
+
 
 
 openPopupEdit.addEventListener('click', () => openProfilePopup());
