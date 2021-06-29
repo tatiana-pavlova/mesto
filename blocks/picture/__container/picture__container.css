@@ -1,9 +1,4 @@
 .picture__container {
-  margin: 50px 50px 0 0;
+  margin: 0;
 }
 
-@media screen and (max-width: 620px)  {
-  .picture__container {
-    margin: 45px 40px 0;
-  }
-}

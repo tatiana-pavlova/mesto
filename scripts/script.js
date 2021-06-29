@@ -21,7 +21,7 @@ const newCardLink = popupAdd.querySelector('.popup__input_place-link');
 const cardPlace = document.querySelector('.places');
 const cardDelete = document.querySelector('.place__delete');
 const popupPhoto = document.querySelector('.popup_type_photo');
-const closePopupPhoto = document.querySelector('.picture__close');
+const closePopupPhoto = popupPhoto.querySelector('.popup__close');
 const cardTemplate = document.querySelector('#place').content;
 const formList = Array.from(document.querySelectorAll('.popup__form'));
 const selectors = {
@@ -128,8 +128,6 @@ function setValidationCheck () {
 
 downloadCards(initialCards);
 setValidationCheck();
-
-
 
 
 openPopupEdit.addEventListener('click', () => openProfilePopup());
