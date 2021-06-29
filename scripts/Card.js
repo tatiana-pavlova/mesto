@@ -1,16 +1,16 @@
-import { openPopup, popupPhoto } from "./script.js";
+import { openPopup, popupPhoto, photo, photoName } from "./script.js";
 
 export class Card {
-  constructor(card, templateSelector) {
+  constructor(card, template) {
     this._name = card.name;
     this._src = card.link;
     this._alt = card.name;
-    this._templateSelector = templateSelector;
+    this._template = template;
   }
 
 
   _getTemplate() {   
-    const cardElement = this._templateSelector.querySelector('.place').cloneNode(true);
+    const cardElement = this._template.querySelector('.place').cloneNode(true);
 
     return cardElement;
   }
@@ -40,10 +40,9 @@ export class Card {
 
 
   _showPicture () {
-    const photo = popupPhoto.querySelector('.picture__view');
     photo.src = this._src;
     photo.alt = this._alt;
-    popupPhoto.querySelector('.picture__name').textContent = this._name;
+    photoName.textContent = this._name;
   }
 
 
