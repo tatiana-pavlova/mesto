@@ -1,10 +1,11 @@
-import Card from "./Card.js";
-import { initialCards } from "./initialCards.js";
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
+import "./index.css";
+import Card from "../components/Card.js";
+import { initialCards } from "../scripts/initialCards.js";
+import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 export {photo, photoName};
 
@@ -17,7 +18,6 @@ const editJob = document.querySelector('.popup__input_edit_job');
 const openPopupAdd = document.querySelector('.profile__add');
 const popupAdd = document.querySelector('.popup_type_new-card');
 const popupAddForm = popupAdd.querySelector('.popup__form');
-const cardPlace = document.querySelector('.places');
 const popupPhoto = document.querySelector('.popup_type_photo');
 const photo = popupPhoto.querySelector('.picture__view');
 const photoName = popupPhoto.querySelector('.picture__name');
@@ -102,4 +102,7 @@ openPopupEdit.addEventListener('click', () => {
   popupEditValidator.clearFormErrors();
 }); 
 
-openPopupAdd.addEventListener('click', () => popupNewCard.openPopup()); 
+openPopupAdd.addEventListener('click', () => {
+  popupNewCard.openPopup();
+  popupAddValidator.clearFormErrors();
+}); 
