@@ -25,7 +25,7 @@ export default class Card {
   }
 
   _handleDeleteCardClick () {
-    this._deleteButton.remove();
+    this._element.remove();
     this._element = null;
   }
 
