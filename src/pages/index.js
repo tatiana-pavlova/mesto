@@ -7,8 +7,6 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 
-export {photo, photoName};
-
 
 const openPopupEdit = document.querySelector('.profile__edit');
 const popupEdit = document.querySelector('.popup_type_edit-profile');
@@ -18,9 +16,6 @@ const editJob = document.querySelector('.popup__input_edit_job');
 const openPopupAdd = document.querySelector('.profile__add');
 const popupAdd = document.querySelector('.popup_type_new-card');
 const popupAddForm = popupAdd.querySelector('.popup__form');
-const popupPhoto = document.querySelector('.popup_type_photo');
-const photo = popupPhoto.querySelector('.picture__view');
-const photoName = popupPhoto.querySelector('.picture__name');
 const cardTemplate = document.querySelector('#place').content;
 
 const selectors = {

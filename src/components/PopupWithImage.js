@@ -1,15 +1,16 @@
 import Popup from './Popup.js'
-import {photo, photoName} from '../pages/index.js';
 
 export default class PopupWithImage extends Popup {
   constructor (popupSelector) {
     super (popupSelector);
+    this._photo = this._popup.querySelector('.picture__view');
+    this._photoName = this._popup.querySelector('.picture__name');
   }
 
   openPopup (card) {
     super.openPopup();
-    photo.src = card.link;
-    photo.alt = card.name;
-    photoName.textContent = card.name;
+    this._photo.src = card.link;
+    this._photo.alt = card.name;
+    this._photoName.textContent = card.name;
   }
 }
