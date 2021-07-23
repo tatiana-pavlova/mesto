@@ -28,6 +28,7 @@ const selectors = {
 const cardPlaceSelector = '.places';
 const userNameSelector = '.profile__name';
 const userJobSelector = '.profile__job-info';
+const userAvatarSelector = '.profile__avatar';
 
 const popupEditValidator = new FormValidator (selectors, popupEditForm);
 const popupAddValidator = new FormValidator (selectors, popupAddForm);
@@ -64,7 +65,7 @@ const popupNewCard = new PopupWithForm ({
   }
 })
 
-const userInfoData = new UserInfo ({userNameSelector, userJobSelector});
+const userInfoData = new UserInfo ({userNameSelector, userJobSelector, userAvatarSelector});
 
 
 function createCard (card) {
@@ -77,6 +78,20 @@ function createCard (card) {
   });
   return newCard.generateCard();
 }
+
+fetch ('https://nomoreparties.co/v1/cohort-26/users/me', {
+  headers: {
+    authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57'
+  }
+})
+  .then (res => res.json())
+  .then ((res) => {
+    userInfoData.setUserInfo({userName: res.name, userJob: res.about, userAvatar: res.avatar});
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 
 
 cardList.renderItem();
