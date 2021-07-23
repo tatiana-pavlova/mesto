@@ -41,7 +41,8 @@ const cardList = new Section ({
   }
 }, cardPlaceSelector);
 
-const popupShowPhoto = new PopupWithImage ('.popup_type_photo');
+const popupShowPhoto = new PopupWithImage ({popupSelector: '.popup_type_photo', 
+  pictureViewSelector:'.picture__view', pictureNameSelector: '.picture__name'});
 
 const popupEditProfile = new PopupWithForm ({
   popupSelector: '.popup_type_edit-profile',
