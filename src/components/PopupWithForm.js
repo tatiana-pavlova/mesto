@@ -28,4 +28,8 @@ export default class PopupWithForm extends Popup {
     super.closePopup();
     this._formElement.reset();
   }
+
+  deleteCard () {
+    this._handleFormSubmit();
+  }
 }

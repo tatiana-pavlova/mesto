@@ -10,9 +10,13 @@ export default class UserInfo {
     return userData;
   }
 
-  setUserInfo ({userName, userJob, userAvatar}) {
+  setUserInfo ({userName, userJob}) {
     this._userName.textContent = userName;
     this._userJob.textContent = userJob;
+    
+  }
+
+  setUserAvatar (userAvatar) {
     this._userAvatar.src = userAvatar;
   }
 }

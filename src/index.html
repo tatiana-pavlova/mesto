@@ -33,7 +33,10 @@
             <img alt="Фото места" class="place__pic">
             <div class="place__desctiption">
               <h2 class="place__name"></h2>
-              <button type="button" class="place__like" aria-label="Нравится фото места"></button>
+              <div class="place__like-wrapper">
+                <button type="button" class="place__like" aria-label="Нравится фото места"></button>
+                <p class="place__like-counter"></p>
+              </div>
             </div>
             <button type="button" class="place__delete" aria-label="Удалить фото"></button>
           </article>
@@ -78,6 +81,14 @@
         </div>
         <button type="submit" class="popup__button" aria-label="Сохранить изменения">Создать</button>
       </form>
+      <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
+    </div>
+  </div>
+
+  <div class="popup popup_type_delete-card">
+    <div class="popup__container">
+      <h2 class="popup__title">Вы уверены?</h2>
+      <button type="submit" class="popup__button" aria-label="Удалить карточку">Да</button>
       <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
     </div>
   </div>
