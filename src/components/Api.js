@@ -2,8 +2,6 @@ export default class Api {
   constructor (config) {
     this._baseUrl = config.url;
     this._headers = config.headers;
-    
-    
   }
 
   getData () {
@@ -27,6 +25,28 @@ export default class Api {
         about: data.about
       })
     })
+      .then ((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+    }
+
+  editUserAvatar (avatarUrl) {
+    return fetch (this._baseUrl, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: avatarUrl
+      })
+    })
+      .then ((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
   }
 
   loadNewCard(card) {
@@ -38,21 +58,39 @@ export default class Api {
         link: card.link
       })
     })
-      .then (res => res.json())
+      .then ((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
   }
 
-  _putLike () {
+  putLike () {
     return fetch (this._baseUrl, {
       method: 'PUT',
       headers: this._headers,
     })
+      .then ((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      
   } 
   
-  _deleteLike () {
+  deleteLike () {
     return fetch (this._baseUrl, {
       method: 'DELETE',
       headers: this._headers,
     })
+      .then ((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
   }
 
   deleteCard () {
@@ -60,6 +98,13 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers,
     })
+      .then ((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+    
   }
 
 }

@@ -5,6 +5,7 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
     this._formElement = document.querySelector(popupSelector).querySelector('.popup__form');
+    this._button = this._formElement.querySelector('.popup__button');
   }
 
   _getInputValues () {
@@ -31,5 +32,19 @@ export default class PopupWithForm extends Popup {
 
   deleteCard () {
     this._handleFormSubmit();
+  }
+
+  renderLoading (isLoading, popup) {
+    if (isLoading) {
+      this._button.innerHTML = 'Сохранение...';
+    } else {
+      switch (popup) {
+        case 'popupNewCard':
+          this._button.innerHTML = 'Создать'
+          break;
+        default:
+          this._button.innerHTML = 'Сохранить'
+      }
+    }
   }
 }

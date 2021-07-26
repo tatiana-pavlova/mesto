@@ -14,6 +14,7 @@ export default class Card {
     this._dislikeClick = dislikeClick;
     this._handleDeleteClick = handleDeleteClick;
     
+    
   }
 
   _getTemplate() {   
@@ -28,15 +29,19 @@ export default class Card {
     this._imageElement.addEventListener ('click', () => { this._handleCardClick (this._card) });
   }
 
-  //доделать функцию
   _handleLikeClick () {
     if (this._likeButton.classList.contains('place__like_active')) {
-      this._dislikeClick();
+      this._dislikeClick()
+        .then ((res) => {
+          this._likeCounter.textContent = res.likes.length;
+        })
     } else {
-      this._likeClick();
+      this._likeClick()
+        .then ((res) => {
+          this._likeCounter.textContent = res.likes.length;
+        })
     }
     this._likeButton.classList.toggle('place__like_active');
-    this._likeCounter.textContent = this._likeAmount;
   }
 
   
@@ -53,20 +58,11 @@ export default class Card {
     this._deleteButton = this._element.querySelector('.place__delete');
     this._likeCounter = this._element.querySelector('.place__like-counter');
     
-    
-
-    
+        
     this._setEventListeners();
     this._deleteButton.classList.add((this._userId === this._cardOwnerId)? 'place__delete_visible' : 'place__delete_hidden');
-    this._card.likes.forEach((user) => {
-      if (user._id.contains(this._userId)) {
-        this._likeButton.classList.add('place__like_active');
-      }
-    });
-    //не работает
-    // if (this._card.likes._id.includes(this._userId)) {
-    //   this._likeButton.classList.add('place__like_active');
-    // }
+    this._checkActiveLike();
+
     
     this._titleElement.textContent = this._name;
     this._imageElement.src = this._src;
@@ -74,6 +70,14 @@ export default class Card {
     this._likeCounter.textContent = this._likeAmount;
 
     return this._element;
+  }
+
+  _checkActiveLike () {
+    this._likes.forEach((obj) => {
+      if (obj._id === this._userId) {
+        this._likeButton.classList.add('place__like_active')
+      }
+    })
   }
 
   
