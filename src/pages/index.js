@@ -1,6 +1,5 @@
 import "./index.css";
 import Card from "../components/Card.js";
-// import { initialCards } from "../scripts/initialCards.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -60,7 +59,7 @@ const popupEditProfile = new PopupWithForm ({
       .catch ((err) => {
         console.log(err);
       })
-      .finally ((res) => {
+      .finally (() => { 
         popupEditProfile.renderLoading(false);
       });
     popupEditProfile.closePopup();
@@ -83,7 +82,7 @@ const popupNewCard = new PopupWithForm ({
       .catch((err) => {
         console.log(err);
       })
-      .finally ((res) => {
+      .finally (() => { 
         popupNewCard.renderLoading(false,'popupNewCard');
       })
   }
@@ -97,7 +96,7 @@ const popupAvatarEdit = new PopupWithForm ({
       .catch ((err) => {
         console.log(err);
       })
-      .finally ((res) => {
+      .finally (() => {
         popupAvatarEdit.renderLoading(false); 
       })
     userInfoData.setUserAvatar(avatar);
@@ -105,37 +104,13 @@ const popupAvatarEdit = new PopupWithForm ({
   }
 })
 
-// const popupDeleteCard = new PopupwithSubmit ({
-//   popupSelector: '.popup_type_delete-card',
-//   handleFormSubmit: (card) => {
-//     const apiCard = new Api ({url: `https://mesto.nomoreparties.co/v1/cohort-26/cards/${card._id}`, 
-//         headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
-//                   'Content-Type': 'application/json'}
-//       });
-      
-//     apiCard.deleteItem()
-//       .then ((res) => {
-//         card.deleteCardElement(); //???
-//         popupDeleteCard.closePopup();
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       })
-    
-//   }
-// })
+const popupDeleteCard = new PopupWithSubmit ({popupSelector: '.popup_type_delete-card'});
 
-
-
-
+  
 const userInfoData = new UserInfo ({userNameSelector, userJobSelector, userAvatarSelector});
 
-const apiUserInfo = new Api({url: 'https://nomoreparties.co/v1/cohort-26/users/me', 
-  headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
-            'Content-Type': 'application/json'}
-});
 
-const apiCards = new Api ({url: 'https://mesto.nomoreparties.co/v1/cohort-26/cards', 
+const apiUserInfo = new Api({url: 'https://nomoreparties.co/v1/cohort-26/users/me', 
   headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
             'Content-Type': 'application/json'}
 });
@@ -144,6 +119,11 @@ const apiUserAvatar = new Api ({url: 'https://mesto.nomoreparties.co/v1/cohort-2
   headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
             'Content-Type': 'application/json'}
 })
+
+const apiCards = new Api ({url: 'https://mesto.nomoreparties.co/v1/cohort-26/cards', 
+  headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
+            'Content-Type': 'application/json'}
+});
 
 
 apiUserInfo.getData()
@@ -174,11 +154,10 @@ function createCard (card) {
       });
 
   const apiCard = new Api ({url: `https://mesto.nomoreparties.co/v1/cohort-26/cards/${card._id}`, 
-        headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57'
-                  }// 'Content-Type': 'application/json'}
+        headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
+                  'Content-Type': 'application/json'}
       });
 
-  
   const newCard = new Card ({
     card: card,
     userId: userId,
@@ -190,26 +169,20 @@ function createCard (card) {
       return apiCardLike.putLike()
     },
     dislikeClick: () => {
-      return apiCardLike.deleteLike()
+      return apiCardLike.deleteItem()
     },
     handleDeleteClick: () => {
-      const popupDeleteCard = new PopupWithSubmit ({
-        popupSelector: '.popup_type_delete-card',
-        handleFormSubmit: () => {
-          apiCard.deleteCard()
-            .then (() => {
-              newCard.deleteCardElement();
-              popupDeleteCard.closePopup();
-            })
-            .catch((err) => {
-              console.log(err);
-            })
-        }
-      })
-      popupDeleteCard.setEventListeners();
       popupDeleteCard.openPopup();
-      popupDeleteCard.setDeleteListener();
-      
+      popupDeleteCard.setDeleteListener({handleFormSubmit: () => {
+        apiCard.deleteItem()
+        .then ((res) => {
+          newCard.deleteCardElement();
+          popupDeleteCard.closePopup();
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }});
     }
   });
   return newCard.generateCard();
@@ -219,6 +192,7 @@ function createCard (card) {
 popupShowPhoto.setEventListeners();
 popupEditProfile.setEventListeners();
 popupNewCard.setEventListeners();
+popupDeleteCard.setEventListeners();
 popupAvatarEdit.setEventListeners();
 
 

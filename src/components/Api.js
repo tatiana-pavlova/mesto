@@ -80,7 +80,7 @@ export default class Api {
       
   } 
   
-  deleteLike () {
+  deleteItem () {
     return fetch (this._baseUrl, {
       method: 'DELETE',
       headers: this._headers,
@@ -92,19 +92,4 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
   }
-
-  deleteCard () {
-    return fetch (this._baseUrl, {
-      method: 'DELETE',
-      headers: this._headers,
-    })
-      .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-    
-  }
-
 }

@@ -13,8 +13,6 @@ export default class Card {
     this._likeClick = likeClick;
     this._dislikeClick = dislikeClick;
     this._handleDeleteClick = handleDeleteClick;
-    
-    
   }
 
   _getTemplate() {   
@@ -80,5 +78,4 @@ export default class Card {
     })
   }
 
-  
 }
