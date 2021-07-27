@@ -36,9 +36,11 @@ const userNameSelector = '.profile__name';
 const userJobSelector = '.profile__job-info';
 const userAvatarSelector = '.profile__avatar';
 
+
 const popupEditValidator = new FormValidator (selectors, popupEditForm);
 const popupAddValidator = new FormValidator (selectors, popupAddForm);
-const popupAvatarValidator = new FormValidator (selectors, popupAvatarForm)
+const popupAvatarValidator = new FormValidator (selectors, popupAvatarForm);
+
 
 const cardList = new Section (
   {renderer: (cardItem) => {
@@ -46,6 +48,7 @@ const cardList = new Section (
     cardList.addItem(cardElement);
   }
 }, cardPlaceSelector);
+
 
 const popupShowPhoto = new PopupWithImage ({popupSelector: '.popup_type_photo', 
   pictureViewSelector:'.picture__view', pictureNameSelector: '.picture__name'});
