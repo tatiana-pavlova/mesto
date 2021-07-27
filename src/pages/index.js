@@ -31,10 +31,19 @@ const selectors = {
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__error_visible'
 }
+const popupSelectors = {
+  showPhotoSelector: '.popup_type_photo',
+  editProfileSelector: '.popup_type_edit-profile',
+  newCardSelector: '.popup_type_new-card',
+  editAvatarSelector: '.popup_type_edit-avatar',
+  deleteCardSelector: '.popup_type_delete-card'
+}
 const cardPlaceSelector = '.places';
 const userNameSelector = '.profile__name';
 const userJobSelector = '.profile__job-info';
 const userAvatarSelector = '.profile__avatar';
+const photoViewSelector = '.picture__view';
+const photoNameSelector = '.picture__name';
 
 
 const popupEditValidator = new FormValidator (selectors, popupEditForm);
@@ -50,11 +59,11 @@ const cardList = new Section (
 }, cardPlaceSelector);
 
 
-const popupShowPhoto = new PopupWithImage ({popupSelector: '.popup_type_photo', 
-  pictureViewSelector:'.picture__view', pictureNameSelector: '.picture__name'});
+const popupShowPhoto = new PopupWithImage ({popupSelector: popupSelectors.showPhotoSelector, 
+  pictureViewSelector: photoViewSelector, pictureNameSelector: photoNameSelector});
 
 const popupEditProfile = new PopupWithForm ({
-  popupSelector: '.popup_type_edit-profile',
+  popupSelector: popupSelectors.editProfileSelector,
   handleFormSubmit: ({name, job}) => {
     userInfoData.setUserInfo({userName: name, userJob: job});
     popupEditProfile.renderLoading(true);
@@ -65,12 +74,12 @@ const popupEditProfile = new PopupWithForm ({
       .finally (() => { 
         popupEditProfile.renderLoading(false);
       });
-    popupEditProfile.closePopup();
+    popupEditProfile.close();
   }
 });
 
 const popupNewCard = new PopupWithForm ({
-  popupSelector: '.popup_type_new-card',
+  popupSelector: popupSelectors.newCardSelector,
   handleFormSubmit: ({placeName, placeLink}) => {
     const newCard = {
       name: placeName,
@@ -80,7 +89,7 @@ const popupNewCard = new PopupWithForm ({
     api.loadNewCard(newCard)
       .then ((res) => {
         cardList.addItem(createCard(res));
-        popupNewCard.closePopup();
+        popupNewCard.close();
       })
       .catch((err) => {
         console.log(err);
@@ -92,22 +101,25 @@ const popupNewCard = new PopupWithForm ({
 })
 
 const popupAvatarEdit = new PopupWithForm ({
-  popupSelector: '.popup_type_edit-avatar',
+  popupSelector: popupSelectors.editAvatarSelector,
   handleFormSubmit: ({avatar}) => {
     popupAvatarEdit.renderLoading(true); 
     api.editUserAvatar(avatar)
+      .then (() => { 
+        userInfoData.setUserAvatar(avatar);
+        popupAvatarEdit.close();
+      })
       .catch ((err) => {
         console.log(err);
       })
       .finally (() => {
         popupAvatarEdit.renderLoading(false); 
       })
-    userInfoData.setUserAvatar(avatar);
-    popupAvatarEdit.closePopup();
+    
   }
 })
 
-const popupDeleteCard = new PopupWithSubmit ({popupSelector: '.popup_type_delete-card'});
+const popupDeleteCard = new PopupWithSubmit ({popupSelector: popupSelectors.deleteCardSelector});
 
   
 const userInfoData = new UserInfo ({userNameSelector, userJobSelector, userAvatarSelector});
@@ -118,26 +130,17 @@ const api = new Api({url: 'https://nomoreparties.co/v1/cohort-26',
             'Content-Type': 'application/json'}
 });
 
-
-api.getUserInfo()
-  .then ((res) => {
-    userInfoData.setUserInfo({userName: res.name, userJob: res.about});
-    userInfoData.setUserAvatar(res.avatar);
-    userId = res._id;
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([resUser, resCards]) => {
+    userInfoData.setUserInfo({userName: resUser.name, userJob: resUser.about});
+    userInfoData.setUserAvatar(resUser.avatar);
+    userId = resUser._id;
+    cardList.renderItem(resCards.reverse());
   })
   .catch((err) => {
     console.log(err);
   });
-
-
-api.getInitialCards()
-  .then ((res) => {
-    cardList.renderItem(res.reverse());
-  })
-  .catch ((err) => {
-    console.log(`Ошибка: ${err}`);
-  })
-
+  
 
 function createCard (card) {
   const newCard = new Card ({
@@ -145,26 +148,38 @@ function createCard (card) {
     userId: userId,
     template: cardTemplate,
     handleCardClick: (card) => {
-      popupShowPhoto.openPopup(card);
+      popupShowPhoto.open(card);
     },
-    likeClick: () => {
-      return api.putLike(card._id)
-    },
-    dislikeClick: () => {
-      return api.deleteLike()
-    },
-    handleDeleteClick: () => {
-      popupDeleteCard.openPopup();
-      popupDeleteCard.setDeleteListener({handleFormSubmit: () => {
-        api.deleteCard(card._id)
-        .then (() => {
-          newCard.deleteCardElement();
-          popupDeleteCard.closePopup();
+    likeClick: (counter) => {
+      api.putLike(card._id)
+        .then ((res) => {
+          counter.textContent = res.likes.length;
         })
-        .catch((err) => {
+        .catch ((err) => {
           console.log(err);
         })
-      }});
+    },
+    dislikeClick: (counter) => {
+      api.deleteLike(card._id)
+        .then ((res) => {
+          counter.textContent = res.likes.length;
+        })
+        .catch ((err) => {
+          console.log(err);
+        })
+    },
+    handleDeleteClick: () => {
+      popupDeleteCard.open();
+      popupDeleteCard.setSubmitAction(() => {
+        api.deleteCard(card._id)
+          .then (() => {
+            newCard.deleteCardElement();
+            popupDeleteCard.close();
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      });
     }
   });
   return newCard.generateCard();
@@ -183,21 +198,20 @@ popupAddValidator.enableValidation();
 popupAvatarValidator.enableValidation();
 
 
-
 openPopupEdit.addEventListener('click', () => {
   const {userName, userJob} = userInfoData.getUserInfo();
   editName.value = userName;
   editJob.value = userJob;
-  popupEditProfile.openPopup();
+  popupEditProfile.open();
   popupEditValidator.clearFormErrors();
 }); 
 
 openPopupAdd.addEventListener('click', () => {
-  popupNewCard.openPopup();
+  popupNewCard.open();
   popupAddValidator.clearFormErrors();
 });
 
 avatarEdit.addEventListener('click', () => {
-  popupAvatarEdit.openPopup();
+  popupAvatarEdit.open();
   popupAvatarValidator.clearFormErrors();
 })

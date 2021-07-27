@@ -29,15 +29,9 @@ export default class Card {
 
   _handleLikeClick () {
     if (this._likeButton.classList.contains('place__like_active')) {
-      this._dislikeClick()
-        .then ((res) => {
-          this._likeCounter.textContent = res.likes.length;
-        })
+      this._dislikeClick(this._likeCounter);
     } else {
-      this._likeClick()
-        .then ((res) => {
-          this._likeCounter.textContent = res.likes.length;
-        })
+      this._likeClick(this._likeCounter);
     }
     this._likeButton.classList.toggle('place__like_active');
   }
@@ -77,5 +71,4 @@ export default class Card {
       }
     })
   }
-
 }

@@ -10,10 +10,7 @@ export default class Api {
       headers: this._headers
     })
       .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res)
       })
   }
 
@@ -23,10 +20,7 @@ export default class Api {
       headers: this._headers
     })
       .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res)
       })
   }
 
@@ -40,10 +34,7 @@ export default class Api {
       })
     })
       .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res)
       })
   }
 
@@ -56,10 +47,7 @@ export default class Api {
       })
     })
       .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res)
       })
   }
 
@@ -73,10 +61,7 @@ export default class Api {
       })
     })
       .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res)
       })
   }
 
@@ -86,10 +71,7 @@ export default class Api {
       headers: this._headers,
     })
       .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res)
       })
   } 
 
@@ -99,10 +81,7 @@ export default class Api {
       headers: this._headers,
     })
       .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res)
       })
   } 
   
@@ -112,10 +91,14 @@ export default class Api {
       headers: this._headers,
     })
       .then ((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
+        return this._checkResponse(res)
       })
+  }
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json()
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 }
