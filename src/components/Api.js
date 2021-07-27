@@ -4,8 +4,22 @@ export default class Api {
     this._headers = config.headers;
   }
 
-  getData () {
-    return fetch (this._baseUrl, {
+
+  getUserInfo () {
+    return fetch (`${this._baseUrl}/users/me`, {
+      headers: this._headers
+    })
+      .then ((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+  }
+
+
+  getInitialCards () {
+    return fetch (`${this._baseUrl}/cards`, {
       headers: this._headers
     })
       .then ((res) => {
@@ -17,7 +31,7 @@ export default class Api {
   }
 
   editProfileInfo (data) {
-    return fetch (this._baseUrl, {
+    return fetch (`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -31,10 +45,10 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-    }
+  }
 
   editUserAvatar (avatarUrl) {
-    return fetch (this._baseUrl, {
+    return fetch (`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -50,7 +64,7 @@ export default class Api {
   }
 
   loadNewCard(card) {
-    return fetch (this._baseUrl, {
+    return fetch (`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -66,8 +80,8 @@ export default class Api {
       })
   }
 
-  putLike () {
-    return fetch (this._baseUrl, {
+  putLike (cardId) {
+    return fetch (`${this._baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this._headers,
     })
@@ -77,11 +91,23 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      
+  } 
+
+  deleteLike (cardId) {
+    return fetch (`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+      .then ((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
   } 
   
-  deleteItem () {
-    return fetch (this._baseUrl, {
+  deleteCard (cardId) {
+    return fetch (`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     })

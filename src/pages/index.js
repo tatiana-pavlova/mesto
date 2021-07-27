@@ -55,7 +55,7 @@ const popupEditProfile = new PopupWithForm ({
   handleFormSubmit: ({name, job}) => {
     userInfoData.setUserInfo({userName: name, userJob: job});
     popupEditProfile.renderLoading(true);
-    apiUserInfo.editProfileInfo({name: name, about: job})
+    api.editProfileInfo({name: name, about: job})
       .catch ((err) => {
         console.log(err);
       })
@@ -74,7 +74,7 @@ const popupNewCard = new PopupWithForm ({
       link: placeLink
     }
     popupNewCard.renderLoading(true,'popupNewCard');
-    apiCards.loadNewCard(newCard)
+    api.loadNewCard(newCard)
       .then ((res) => {
         cardList.addItem(createCard(res));
         popupNewCard.closePopup();
@@ -92,7 +92,7 @@ const popupAvatarEdit = new PopupWithForm ({
   popupSelector: '.popup_type_edit-avatar',
   handleFormSubmit: ({avatar}) => {
     popupAvatarEdit.renderLoading(true); 
-    apiUserAvatar.editUserAvatar(avatar)
+    api.editUserAvatar(avatar)
       .catch ((err) => {
         console.log(err);
       })
@@ -110,23 +110,13 @@ const popupDeleteCard = new PopupWithSubmit ({popupSelector: '.popup_type_delete
 const userInfoData = new UserInfo ({userNameSelector, userJobSelector, userAvatarSelector});
 
 
-const apiUserInfo = new Api({url: 'https://nomoreparties.co/v1/cohort-26/users/me', 
-  headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
-            'Content-Type': 'application/json'}
-});
-
-const apiUserAvatar = new Api ({url: 'https://mesto.nomoreparties.co/v1/cohort-26/users/me/avatar',
-  headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
-            'Content-Type': 'application/json'}
-})
-
-const apiCards = new Api ({url: 'https://mesto.nomoreparties.co/v1/cohort-26/cards', 
+const api = new Api({url: 'https://nomoreparties.co/v1/cohort-26', 
   headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
             'Content-Type': 'application/json'}
 });
 
 
-apiUserInfo.getData()
+api.getUserInfo()
   .then ((res) => {
     userInfoData.setUserInfo({userName: res.name, userJob: res.about});
     userInfoData.setUserAvatar(res.avatar);
@@ -137,7 +127,7 @@ apiUserInfo.getData()
   });
 
 
-apiCards.getData()
+api.getInitialCards()
   .then ((res) => {
     cardList.renderItem(res.reverse());
   })
@@ -147,17 +137,6 @@ apiCards.getData()
 
 
 function createCard (card) {
-
-  const apiCardLike = new Api ({url: `https://mesto.nomoreparties.co/v1/cohort-26/cards/likes/${card._id}`, 
-        headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
-                  'Content-Type': 'application/json'}
-      });
-
-  const apiCard = new Api ({url: `https://mesto.nomoreparties.co/v1/cohort-26/cards/${card._id}`, 
-        headers: {authorization: 'adc76ba5-f155-4ece-b7e2-4db6eaf8ed57',
-                  'Content-Type': 'application/json'}
-      });
-
   const newCard = new Card ({
     card: card,
     userId: userId,
@@ -166,16 +145,16 @@ function createCard (card) {
       popupShowPhoto.openPopup(card);
     },
     likeClick: () => {
-      return apiCardLike.putLike()
+      return api.putLike(card._id)
     },
     dislikeClick: () => {
-      return apiCardLike.deleteItem()
+      return api.deleteLike()
     },
     handleDeleteClick: () => {
       popupDeleteCard.openPopup();
       popupDeleteCard.setDeleteListener({handleFormSubmit: () => {
-        apiCard.deleteItem()
-        .then ((res) => {
+        api.deleteCard(card._id)
+        .then (() => {
           newCard.deleteCardElement();
           popupDeleteCard.closePopup();
         })
