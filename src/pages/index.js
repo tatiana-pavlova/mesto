@@ -23,6 +23,8 @@ const avatarEdit = document.querySelector('.profile__avatar-overlay');
 const cardTemplate = document.querySelector('#place').content;
 let userId = null;
 
+const test = null //тест ssh key github
+
 const selectors = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
